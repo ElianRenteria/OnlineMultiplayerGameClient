@@ -13,7 +13,7 @@ class Game:
         self.win_height = 800
         self.win = pygame.display.set_mode((self.win_width, self.win_height))
         pygame.display.set_caption("Game")
-        #pygame.display.set_icon(pygame.image.load("icon.png")
+        pygame.display.set_icon(pygame.image.load("assets/clown.jpg"))
         self.player = Player(self.win, username)
         self.frame_rate = 60
         self.clock = pygame.time.Clock()
