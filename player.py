@@ -16,6 +16,11 @@ class Player:
     def draw(self):
         self.move()
         pygame.draw.circle(self.win, self.color, (self.x, self.y), self.radius)
+        font = pygame.font.Font('freesansbold.ttf', 12)
+        text = font.render(self.name, True, (0, 0, 0))
+        text_rect = text.get_rect()
+        text_rect.center = (self.x, self.y-15)
+        self.win.blit(text, text_rect)
 
     def move(self):
         userinput = pygame.key.get_pressed()

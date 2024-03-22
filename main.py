@@ -23,8 +23,6 @@ class Game:
             self.client.receive()
             data = self.client.receive()
             self.game_state = json.loads(data)
-            #print(self.game_state)
-
 
     def run(self):
         run = True
@@ -36,6 +34,11 @@ class Game:
                     player_data = json.loads(self.game_state[player])
                     if player_data["name"] != self.player.get_name():
                         pygame.draw.circle(self.win, (0, 0, 203), player_data["pos"], 10)
+                        font = pygame.font.Font('freesansbold.ttf', 12)
+                        text = font.render(player_data["name"], True, (0, 0, 0))
+                        text_rect = text.get_rect()
+                        text_rect.center = (player_data["pos"][0], player_data["pos"][1]-15)
+                        self.win.blit(text, text_rect)
                 except:
                     pass
             self.player.draw()
