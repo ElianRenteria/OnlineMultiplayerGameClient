@@ -3,6 +3,7 @@ import json
 import threading
 from player import Player
 from client import Client
+import customtkinter
 
 class Game:
     def __init__(self, username):
@@ -52,9 +53,26 @@ class Game:
         pygame.quit()
 
 
-if __name__ == "__main__":
-    username = input("Enter your username: ")
+def run_game(username, root):
+    root.destroy()
     game = Game(username)
     update_thread = threading.Thread(target=game.update_game_state)
     update_thread.start()
     game.run()
+
+
+if __name__ == "__main__":
+    root = customtkinter.CTk()
+    root.title("Join Game")
+    root.geometry("400x500")
+    root.resizable(False, False)
+
+    title_label = customtkinter.CTkLabel(root, text="Game", font=("Helvetica", 64))
+    title_label.place(x=120, y=75)
+    username_entry = customtkinter.CTkEntry(root, width = 250,height=40, placeholder_text="Enter username", font=("Helvetica", 20), justify="center")
+    username_entry.place(x=75, y=180)
+    submit_button = customtkinter.CTkButton(root, text="Enter", command=lambda: run_game(username_entry.get(), root), width=100, height=30, font=("Helvetica", 20))
+    submit_button.place(x=150, y=240)
+
+    root.mainloop()
+
