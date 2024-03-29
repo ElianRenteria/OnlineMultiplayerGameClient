@@ -21,9 +21,12 @@ class Game:
 
     def update_game_state(self):
         while True:
-            self.client.receive()
-            data = self.client.receive()
-            self.game_state = json.loads(data)
+            try:
+                data = self.client.receive()
+                if data is not None:
+                    self.game_state = json.loads(data)
+            except:
+                pass
 
     def run(self):
         run = True
@@ -32,7 +35,7 @@ class Game:
             self.win.fill((255, 255, 255))
             for player in self.game_state:
                 try:
-                    player_data = json.loads(self.game_state[player])
+                    player_data = self.game_state[player]
                     if player_data["name"] != self.player.get_name():
                         pygame.draw.circle(self.win, (0, 0, 203), player_data["pos"], 10)
                         font = pygame.font.Font('freesansbold.ttf', 12)
@@ -41,6 +44,8 @@ class Game:
                         text_rect.center = (player_data["pos"][0], player_data["pos"][1]-15)
                         self.win.blit(text, text_rect)
                 except:
+                    print("Error drawing player")
+                    #print(self.game_state)
                     pass
             self.player.draw()
             pygame.display.update()
